@@ -5,10 +5,10 @@
 	
     <resultMap id="departmentResultMap" type="com.pup.taguig.app.model.Department">
 		<id column="dept_id" property="id"/>
-		<result column ="name" property="name"/>
-		<result column ="display_name" property="displayName"/>
+		<result column="name" property="name"/>
+		<result column="display_name" property="displayName"/>
 		
-		<collection property = "students" ofType="com.pup.taguig.app.model.StudentM">
+		<collection property="students" ofType="com.pup.taguig.app.model.StudentM">
 		     <id column="student_id" property="id"/>
         	<result property="firstName" column="first_name"/>
         	<result property="lastName" column="last_name"/>
@@ -17,15 +17,18 @@
         </collection>
 	</resultMap>
 	
-	<select id="getDepartmentAndStudentsById" resultMap="departmentResultMap">
+	<select id="getDepartmentAndStudentById" resultMap="departmentResultMap">
 		SELECT
-            d.*,
-            s.id student_id, 
+            d.id as dept_id,
+            d.name,
+            d.display_name,
+            s.id as student_id, 
             s.first_name,
             s.last_name,
-   		FROM department d
-        LEFT JOIN student s
-            ON s.department_id = d.id
+            s.midterm_grade,
+            s.final_grade
+		FROM department d
+        LEFT JOIN student s ON s.department_id = d.id
         WHERE d.id = #{id}
 	</select>
 	
