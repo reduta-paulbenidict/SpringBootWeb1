@@ -26,23 +26,32 @@ public class DepartmentServiceImpl implements DepartmentService{
 		try {
 			Department dept = deptRepository.getDepartmentAndStudentById(id);
 			
-			result.setName(dept.getName());
-			result.setDisplayName(dept.getDisplayName());
-			
-			if(Objects.nonNull(dept.getStudents())) {
-				List<StudentResponseDTO> studDtoList = new ArrayList<StudentResponseDTO>();
+			if(Objects.nonNull(dept)) {
+				result.setId(dept.getId());
+				result.setName(dept.getName());
+				result.setDisplayName(dept.getDisplayName());
 				
-				for(StudentM student : dept.getStudents()) {
-					StudentResponseDTO studResp = new StudentResponseDTO();
-					studResp.setFirstName(student.getFirstName());
-					studResp.setLastName(student.getLastName());
+				if(Objects.nonNull(dept.getStudents())) {
+					List<StudentResponseDTO> studDtoList = new ArrayList<StudentResponseDTO>();
+					
+					for(StudentM student : dept.getStudents()) {
+						StudentResponseDTO studResp = new StudentResponseDTO(
+							student.getId(),
+							student.getFirstName(),
+							student.getLastName(),
+							student.getMidtermGrade(),
+							student.getFinalGrade()
+						);
+						studDtoList.add(studResp); 
+					}
 					
 					result.setStudents(studDtoList);
 				}
 			}
 			
 		} catch(Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("Error: " + e.getMessage());
+			e.printStackTrace();
 		}
 		return result;
 	}

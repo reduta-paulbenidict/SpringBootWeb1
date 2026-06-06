@@ -21,7 +21,7 @@
 		SELECT
             d.*,
             s.id student_id, 
-            s.first_name
+            s.first_name,
             s.last_name,
    		FROM department d
         LEFT JOIN student s
