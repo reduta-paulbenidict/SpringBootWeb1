@@ -1,5 +1,8 @@
 package com.pup.taguig.app.dto;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class StudentResponseDTO {
 	private Long id;
 	private String firstName;
